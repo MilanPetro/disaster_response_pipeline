@@ -1,9 +1,9 @@
 ## Disaster Response Pipeline Project
 ### Building ETL and Machine Learning pipelines to classify text messages during disasters
 
-The goal of the following project was to use real text messages that were sent during disaster events to create a machine learning model that would be able to classify messages into different categories. This could then help disaster response professionals to filter trough the myriad of messages that are being sent during these situations, to find and focus on the messages with the highest priority for them.
+The goal of the following project was to use real text messages that were sent during disaster events to create a machine learning model that would be able to classify messages into different categories. This could then help disaster response professionals to filter trough the myriad of messages that are being sent during these situations, to find and focus on the messages with the highest priority to them.
 
-The data set used in this project contains pre-labeled real messages that were sent during disasters and were obtained from the data annotation platform [Figure Eight](https://www.figure-eight.com/). The messages were either send via social media or directly to disaster response organization.
+The data set used in this project contains pre-labeled real messages that were sent during disasters and were obtained from the data annotation platform [Figure Eight](https://www.figure-eight.com/). The messages were either send via social media or directly to disaster response organizations.
 
 I built an ETL pipeline that loads and processes the data and saves it in a SQL database. A subsequent machine learning pipeline then reads from this database to create and save a supervised machine learning model. In the last step a web app is being generated that uses this model, so that an emergency worker can input a new message to be classified for 36 different categories.
 
