@@ -53,32 +53,32 @@ model = joblib.load("../models/classifier.pkl")
 def index():
 
     # extracting data needed for visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
-
     category_counts = df.iloc[:,4:].sum().sort_values(ascending=False)
     category_names = list(df.iloc[:,4:].sum().sort_values(ascending=False).index)
 
+    genre_direct = df[df["genre"]=="direct"].iloc[:,4:].sum()
+    genre_news = df[df["genre"]=="news"].iloc[:,4:].sum()
+    genre_social = df[df["genre"]=="social"].iloc[:,4:].sum()
+    genre_df = pd.DataFrame([genre_direct, genre_news, genre_social],
+                            index=["direct", "news", "social"])
+
+    def generate_traces(df):
+        """Generates traces for a plotly stacked bar chart"""
+
+        traces = []
+        for i in range(len(df.columns)):
+            trace = Bar(
+                    x = list(df.index),
+                    y = df.iloc[:,i],
+                    name = df.columns[i]
+                    )
+            traces.append(trace)
+
+        return(traces)
+
+
     # creating visuals
     graphs = [
-        {
-            'data': [
-                Bar(
-                    x=genre_names,
-                    y=genre_counts
-                )
-            ],
-
-            'layout': {
-                'title': 'Distribution of Message Genres',
-                'yaxis': {
-                    'title': "Count"
-                },
-                'xaxis': {
-                    'title': "Genre",
-                }
-            }
-        },
         {
             'data': [
                 Bar(
@@ -95,6 +95,16 @@ def index():
                 'xaxis': {
                     "tickangle":45,
                     "automargin":True
+                }
+            }
+        },
+        {
+            'data': generate_traces(genre_df),
+            'layout': {
+                'barmode': 'stack',
+                'title': 'Messages per Genre',
+                'yaxis': {
+                    'title': "Number of Messages"
                 }
             }
         }
